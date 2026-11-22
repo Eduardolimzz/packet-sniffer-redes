@@ -3,7 +3,7 @@ from scapy.all import IP, TCP, Raw, sniff
 
 def analisar_http(pkt, callback_exibir=None):
     """
-    Analisa pacotes TCP na porta 80 e extrai método/caminho (GET/POST)
+    Analisa pacotes TCP na porta 80 e extrai método/caminho/Host (GET/POST)
     ou status da resposta HTTP.
     """
     if not (pkt.haslayer(IP) and pkt.haslayer(TCP) and pkt.haslayer(Raw)):
@@ -33,11 +33,11 @@ def analisar_http(pkt, callback_exibir=None):
         caminho = partes[1] if len(partes) > 1 else "/"
         info = f"{metodo} {caminho}"
 
-        # Captura o corpo do POST (útil para demonstrar envio de senha em texto puro)
-        if metodo == "POST" and "\r\n\r\n" in payload:
-            corpo = payload.split("\r\n\r\n", 1)[1].strip()
-            if corpo:
-                info += f" | Dados POST: {corpo}"
+        # Cabeçalho Host (as linhas do cabeçalho vêm depois da primeira linha)
+        for linha in linhas[1:]:
+            if linha.lower().startswith("host:"):
+                info += f" (Host: {linha[5:].strip()})"
+                break
 
     # Resposta HTTP (Servidor -> Cliente)
     elif primeira_linha.startswith("HTTP/"):
