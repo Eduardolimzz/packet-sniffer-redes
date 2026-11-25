@@ -1,9 +1,12 @@
 from scapy.all import IP, TCP, Raw, sniff
 
+# Métodos HTTP reconhecidos no início de uma requisição
+METODOS_HTTP = ("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS", "PATCH")
+
 
 def analisar_http(pkt, callback_exibir=None):
     """
-    Analisa pacotes TCP na porta 80 e extrai método/caminho/Host (GET/POST)
+    Analisa pacotes TCP na porta 80 e extrai método/caminho/Host (GET, POST, PUT, ...)
     ou status da resposta HTTP.
     """
     if not (pkt.haslayer(IP) and pkt.haslayer(TCP) and pkt.haslayer(Raw)):
@@ -27,8 +30,9 @@ def analisar_http(pkt, callback_exibir=None):
     info = None
 
     # Requisição HTTP (Cliente -> Servidor)
-    if primeira_linha.startswith(("GET ", "POST ")):
-        partes = primeira_linha.split(" ")
+    # A primeira palavra da linha é o método (ex.: "GET /index.html HTTP/1.1")
+    partes = primeira_linha.split(" ")
+    if partes[0] in METODOS_HTTP:
         metodo = partes[0]
         caminho = partes[1] if len(partes) > 1 else "/"
         info = f"{metodo} {caminho}"

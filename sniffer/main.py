@@ -1,8 +1,8 @@
 """
 Ponto de entrada do sniffer.
 
-Ubuntu:   sudo python3 sniffer/main.py --iface wlp2s0
-Windows:  (terminal como administrador) python sniffer\\main.py --iface "Wi-Fi"
+Ubuntu:   sudo python3 sniffer/main.py --iface enp2s0
+Windows:  (terminal como administrador) python sniffer\\main.py --iface "Ethernet"
 Listar:   python3 sniffer/main.py --listar
 """
 
