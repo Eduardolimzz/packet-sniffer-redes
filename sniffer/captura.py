@@ -2,7 +2,7 @@
 Item 1: captura em tempo real.
 
 Abre a captura na interface escolhida, entrega cada pacote aos parsers
-(HTTP e DNS) e conta os pacotes para comparar com o Wireshark no final.
+(HTTP e DNS) e conta os pacotes para comparar com o   no final.
 """
 
 from scapy.all import conf, sniff
@@ -29,7 +29,7 @@ class Captura:
 
     def __init__(self, iface, analisadores, filtro=FILTRO_BPF):
         """
-        iface        -- nome da interface (ex.: "wlp2s0" no Ubuntu, "Wi-Fi" no Windows)
+        iface        -- nome da interface (ex.: "enp2s0" no Ubuntu, "Ethernet" no Windows)
         analisadores -- lista de funções que recebem o pacote e devolvem um
                         dicionário (pacote reconhecido) ou None (ignorado)
         filtro       -- filtro BPF aplicado pelo sistema antes de chegar ao Python
