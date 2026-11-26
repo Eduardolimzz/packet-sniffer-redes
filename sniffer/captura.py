@@ -2,7 +2,7 @@
 Item 1: captura em tempo real.
 
 Abre a captura na interface escolhida, entrega cada pacote aos parsers
-(HTTP e DNS) e conta os pacotes para comparar com o   no final.
+(HTTP e DNS) e conta os pacotes para comparar com o Wireshark  no final.
 """
 
 from scapy.all import conf, sniff
